@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LabPOO
 {
+    [Serializable]
     class Product
     {
         private string name;
@@ -13,12 +14,19 @@ namespace LabPOO
         private int price; //Price for one unit of the product
         private string unit;
 
+        //Constructor con todos los atributos
         public Product(string name, int price, int stock, string unit)
         {
             this.name = name;
             this.stock = stock;
             this.price = price;
             this.unit = unit;
+        }
+        //Constructor sólo con nombre y cantidad para definir la receta
+        public Product(string name, int cantidad)
+        {
+            this.name = name;
+            this.stock = cantidad;
         }
 
         public bool Agregar(List<Product> carrito)

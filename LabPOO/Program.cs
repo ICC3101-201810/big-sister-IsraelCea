@@ -7,16 +7,26 @@ using System.Threading.Tasks;
 
 namespace LabPOO
 {
+    [Serializable]
     class Program
     {
         public static List<Product> cart;
         public static List<Product> market;
-
+        public static List<Product> ingredientes;
+        
+        //public static List<int> cantidades;
+        public static HermanaGrande hermana;
         static void Main(string[] args)
         {
+
+            hermana = new HermanaGrande();
+            hermana.ProductoNoPertenece += Quitar;
+
             cart = new List<Product>();
             market = new List<Product>();
+            
             SupplyStore();
+            CargarReceta();
             while (true)
             {
                 PrintHeader();
@@ -57,6 +67,11 @@ namespace LabPOO
             }
         }
 
+        private static void Quitar(Product producto, List<Product> receta, List<Product> carro)
+        {
+            carro.Remove(producto);
+        }
+
         public static void Pay()
         {
             PrintHeader();
@@ -92,14 +107,18 @@ namespace LabPOO
                     {
                         continue;
                     }
-                    AddToCart(market[answer]);
+                    Product producto = new Product("", 0);
+                    producto = market[answer];
+                    AddToCart(producto);
+                    //hermana.Revisar(producto,ingredientes,cart);//Luego de agregar al carro, se revisa la receta "ingredientes", y si no pertenece, se lanza el evento y se implementa el metodo Quitar() que lo saca del carro "cart"
+                    
                     break;
                 }
                 catch
                 {
                     continue;
                 }
-            }           
+            }
         }
 
         public static void PrintCart()
@@ -133,6 +152,7 @@ namespace LabPOO
         {
             return product.Agregar(cart);
         }
+
 
         public static void SupplyStore()
         {
@@ -190,6 +210,48 @@ namespace LabPOO
             {
                 response = Console.ReadKey(true);
             }
+        }
+        public static void CargarReceta()//Carga a la lista "receta<Product>" todos los ingredientes necesarios con sus cantidades
+        {
+            
+            Console.Clear();
+
+            ingredientes.Add(new Product("Láminas de Lasaña", 1));
+
+            ingredientes.Add(new Product("Queso Parmesano", 1));
+
+            ingredientes.Add(new Product("Mantequilla", 1));
+
+            ingredientes.Add(new Product("Carne Molida", 1));
+
+            ingredientes.Add(new Product("Vino Blanco Caja", 1));
+
+            ingredientes.Add(new Product("Tomates Pelados en lata",1));
+
+            ingredientes.Add(new Product("Bolsa de Zanahorias",1));
+
+            ingredientes.Add(new Product("Malla de Cebollas", 1));
+
+            ingredientes.Add(new Product("Aceite de Oliva", 1));
+
+            ingredientes.Add(new Product("Sal Lobos",1));
+
+            ingredientes.Add(new Product("Pimienta", 1));
+
+            ingredientes.Add(new Product("Harina", 1));
+
+            ingredientes.Add(new Product("Leche Entera", 1));
+
+            //market.Add(new Product("Gomitas Flipy", 720, 12, "100g"));
+            //market.Add(new Product("Crema para hemorroides", 4990, 7, "300cc"));
+            //market.Add(new Product("Vino Sauvignon Blanc Reserva Botella", 4150, 23, "750cc"));
+            //market.Add(new Product("Cuaderno Mi Pequeño Pony", 1290, 50, "1un"));
+            //market.Add(new Product("Audifonos Samsung", 5990, 40, "1un"));
+            //market.Add(new Product("Pisco Alto del Carmen", 5990, 120, "1L"));
+            //market.Add(new Product("Sal parrillera", 840, 50, "750g"));
+            //market.Add(new Product("Cable HDMI 1m", 3990, 25, "1un"));
+            //market.Add(new Product("Queso Rallado Parmesano", 499, 102, "40g"));
+            //market.Add(new Product("Tomate", 1290, 200, "1kg"));
         }
     }
 }
